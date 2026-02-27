@@ -5,20 +5,25 @@ import os
 
 app = FastAPI()
 
-# Allow GitHub Pages frontend to call the API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://n4e-n4e.github.io/DMEPOS.github.io/"],  # Replace "*" with your GitHub Pages URL in production
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-GEMINI_API_KEY = os.getenv("API_KEY")  # We'll set this in Render
+GEMINI_API_KEY = os.getenv("API_KEY")
+
+@app.options("/chat")
+async def options_chat():
+    return {}
 
 @app.post("/chat")
 async def chat(request: Request):
     data = await request.json()
     user_message = data.get("message")
+
     if not user_message:
         return {"error": "No message provided"}
 
@@ -36,8 +41,10 @@ async def chat(request: Request):
                     ]
                 }
             )
+
             result = response.json()
-            reply = result.get("candidates", [{}])[0].get("content", "No response from Gemini")
+            reply = result["candidates"][0]["content"]["parts"][0]["text"]
+
             return {"reply": reply}
 
     except Exception as e:
