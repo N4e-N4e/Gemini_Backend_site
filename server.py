@@ -42,7 +42,7 @@ RULES:
 async def call_gemini(client: httpx.AsyncClient, prompt: str) -> str:
     """Call Gemini and return the raw text response."""
     response = await client.post(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
         headers={
             "Content-Type": "application/json",
             "X-goog-api-key": GEMINI_API_KEY
@@ -140,5 +140,6 @@ async def chat(request: Request):
 
     except Exception as e:
         return {"error": str(e)}
+
 
 
