@@ -74,7 +74,7 @@ async def call_mcp_tool(client: httpx.AsyncClient, tool: str, term: str) -> dict
     if not url:
         return {"error": f"Unknown tool: {tool}"}
 
-    response = await client.post(url, json={"query": term}, timeout=120.0)
+    response = await client.post(url, json={"query": term}, timeout=240)
     return response.json()
 
 
@@ -140,6 +140,7 @@ async def chat(request: Request):
 
     except Exception as e:
         return {"error": str(e)}
+
 
 
 
