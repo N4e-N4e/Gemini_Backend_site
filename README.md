@@ -6,8 +6,8 @@ A FastAPI backend that uses Gemini to analyze healthcare fraud queries. Gemini d
 
 1. Takes a user question via `/chat`
 2. Asks Gemini if a tool call is needed (OIG search or SOS search)
-3. If yes — calls the MCP API, gets the scraped data, and has Gemini summarize it as a fraud analysis
-4. If no — Gemini responds directly
+3. If yes - calls the MCP API, gets the scraped data, and has Gemini summarize it as a fraud analysis
+4. If no - Gemini responds directly
 
 ## Endpoints
 
